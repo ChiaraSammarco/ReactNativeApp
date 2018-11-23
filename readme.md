@@ -20,3 +20,11 @@ react-native init AwesomeProject
 ```
 react-native run-android
 ```
+
+### For debugging ###
+
+To see console for Android devices: 
+
+```
+react-native log-android
+```
