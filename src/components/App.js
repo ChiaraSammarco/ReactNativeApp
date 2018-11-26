@@ -1,135 +1,26 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
-import {
-    Text,
-    View,
-    Platform,
-    TextInput,
-    StyleSheet,
-    TouchableOpacity,
-    TouchableHighlight,
-} from 'react-native';
 
-import bg from '../style/assets/320.png';
+import {Navigator} from 'react-native-deprecated-custom-components';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Nice to see you here!\n' +
-    'Double tap R on your keyboard to reload,\n' +
-    'Lets see if its working. ',
-});
+import UsersList from "./UsersList";
+import UserDetails from "./UserDetails";
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
 
-  constructor() {
-    super();
-
-    this.state = {
-      value: '',
-    }
+  renderScene(route, navigator){
+    switch(route.id){
+      case 'userslist':
+        return (<UsersList navigator={navigator} title="userslist" />);
+      case 'userdetails':
+        return (<UserDetails user={route.user} navigator={navigator} title="userdetails" />);
+      }
   }
-
-  onPressButton = () => {
-    console.log('Button Pressed');
-  };
-
-  onChangeText = (value) => {
-    this.setState({value});
-  };
 
   render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.container2}>
-          <TouchableHighlight
-              style={styles.block1}
-              onPress={this.onPressButton}
-              underlayColor='green'
-          >
-            <View>
-              <Text style={styles.textBlock}> Block1 </Text>
-            </View>
-          </TouchableHighlight>
-
-          <TouchableOpacity
-              onPress={this.onPressButton}
-              style={styles.block2}
-          >
-            <View>
-              <Text style={styles.textBlock}> Block2 </Text>
-            </View>
-          </TouchableOpacity>
-
-          <Text style={styles.block3}> Block3 </Text>
-
-        </View>
-        <Text style={styles.welcome}>Hello Welcome to Chiara's App!</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-
-          <View style={{padding: 10}}>
-              <TextInput
-                  style={{height: 40}}
-                  placeholder="Type here to translate!"
-                  onChangeText={this.onChangeText}
-              />
-              <Text style={{padding: 10, fontSize: 42}}>
-                  {this.state.value}
-              </Text>
-
-          </View>
-      </View>
-    );
+    return(<Navigator
+        initialRoute={{id: 'userslist'}}
+        renderScene={this.renderScene}
+        configureScreen={(route, routeStack) => Navigator.SceneConfigs.FloatFromBottom}
+    />);
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // backgroundColor: '#F5FCFF',
-  },
-  container2: {
-    flexDirection: 'row',
-    height: 100,
-  },
-  block1: {
-    backgroundColor: 'red',
-    flex: 1,
-    padding: 10,
-  },
-  textBlock: {
-    color: 'white'
-  },
-  block2: {
-    flex: 1,
-    backgroundColor: 'blue',
-    padding: 10,
-    color: 'white'
-  },
-  block3: {
-    flex: 1,
-    backgroundColor: 'black',
-    padding: 10,
-    color: 'white'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
